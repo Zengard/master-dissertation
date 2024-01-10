@@ -7,6 +7,9 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
 
+    //добавить объект класса NPC чтобы ссылаться на него
+    //сделать синглтон чтобы персонажи могли вызывать методы
+
     [TextAreaAttribute]
     public string[] lines;
 

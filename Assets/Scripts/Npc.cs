@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Npc : MonoBehaviour
 {
     public GameObject dialogueInteractionIcon;
     public GameObject dialogueBubble;
+    [SerializeField] private GameObject voiceSpeech;
+    [SerializeField] private NavMeshAgent agent;
 
     [Space]
     [Header("Personality traits")]
@@ -25,11 +28,14 @@ public class Npc : MonoBehaviour
 
     [Space]
     [Header("Other NPC's dialogue themes")]
-    public bool ishearOtherNpc;
+    public bool isHearOtherNpc;
+    public float distanceToNpc;
+    private Vector3 npcToFollow;
     public string[] listOfOthersNpcThemes;
 
     [Space]
     public DialogueData[] listOfDialogues;
+    //добавить буловую переменную inDialogue;
 
     private void Update()
     {
@@ -46,16 +52,66 @@ public class Npc : MonoBehaviour
                 isRememberLine = false;
             }
         }
+
+        if(isHearOtherNpc == true)
+        {
+            agent.SetDestination(npcToFollow * distanceToNpc);
+        }
     }
 
     /// <summary>
     /// сделать метод в котором ishearOtherNpc = true
     /// и персонаж анализирует кого он услышал и через передаваемый параметер в заголовок
     /// после чего начинает идти в его сторону по навмешу
+    /// 
+    /// 
+    /// get npchearing parent
+    /// get it's "NPC" script
+    /// get "listOfDialogues"
+    /// get which one is active right now
+    /// get it's TAGS
+    /// compare it with own dialogue TAGS
+    /// нужно два цикла - один который проходит по всем темам нпс
+    /// второй - вложенный, он сравнивает все теги конкретной темы с активной темой нпс 
+    /// если находится совпадение, то запоминается индекс первого цикла
+    /// 
+    /// if have matches
+    /// go near npc
     /// </summary>
+    /// 
+
+    public void FindsInterestingThemes(NpcHearing npcsVoice)
+    {
+        isHearOtherNpc = true;
+        Npc npc = npcsVoice.transform.parent.GetComponent<Npc>();
+        DialogueData npcData = npc.listOfDialogues[0];// 0 replace with correct index in future
+
+        for(int i = 0; i < listOfDialogues[0].tags.Length; i++)
+        {
+            for(int y = 0; y<npcData.tags.Length; y++)
+            {
+                if(listOfDialogues[0].tags[i] == npcData.tags[y])
+                {
+                    Debug.Log(listOfDialogues[0].tags[i]);
+                    agent.SetDestination(npcsVoice.transform.parent.position.normalized);
+                    npcToFollow = npcsVoice.transform.parent.position.normalized;
+                    return;
+                }
+                
+            }
+         
+        }
+        Debug.Log("no matches");
+        isHearOtherNpc = false;
+    }
+
+    private bool CompareTags()
+    {
+        return true;
+    }
 
 
-    public void MemorySpeach()
+    private void MemorySpeach()
     {
 
     }

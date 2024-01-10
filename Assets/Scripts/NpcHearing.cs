@@ -16,19 +16,7 @@ public class NpcHearing : MonoBehaviour
     void Update()
     {
    
-        //DrawHearingSphere();
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            foreach (var hitColider in NpcsColliders)
-            {
-                if (hitColider is CapsuleCollider)
-                {
-                    npcs.Add(hitColider.gameObject.GetComponent<Npc>());
-                }
-
-            }
-        }
+        //DrawHearingSphere();        
 
     }
 
@@ -36,13 +24,33 @@ public class NpcHearing : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "NPC")
-        {
+        {           
             if (other is CapsuleCollider)
             {
-                npcs.Add(other.gameObject.GetComponent<Npc>());
+                if (other.GetComponent<Npc>().isHearOtherNpc == false)
+                {
+                    npcs.Add(other.gameObject.GetComponent<Npc>());
+                    other.GetComponent<Npc>().isHearOtherNpc = true;
+
+                    other.GetComponent<Npc>().FindsInterestingThemes(this);
+                }
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "NPC")
+        {
+            if (other is CapsuleCollider)
+            {
+                    npcs.Remove(other.gameObject.GetComponent<Npc>());
+                    other.GetComponent<Npc>().isHearOtherNpc = false;
+                
+            }
+        }
+    }
+
 
     //private void DrawHearingSphere()
     //{

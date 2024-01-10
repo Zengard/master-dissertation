@@ -7,13 +7,13 @@ public class DialogueData : ScriptableObject
 {
     public int id;
     public string theme;
-    public TagsType fixedTrait;
+    public TraitsType fixedTrait;
     public string[] tags;
 
     [TextAreaAttribute]
     public string[] dialogueLines;
 
-    public enum TagsType
+    public enum TraitsType
     {
         Oppennes = 1 <<0,
         Conscientiousness = 1 << 1,

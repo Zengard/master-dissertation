@@ -16,8 +16,8 @@ MonoBehaviour:
   theme: Gold fish
   fixedTrait: 2
   tags:
-  - Gold
   - Fish
+  - Gold
   - Fishing
   dialogueLines:
   - You won't believe what happened with me recently!

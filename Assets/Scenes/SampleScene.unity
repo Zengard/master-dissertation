@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 220357379}
   - component: {fileID: 220357378}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: DialogueCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,7 +217,7 @@ RectTransform:
   m_Children:
   - {fileID: 2082271806}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -234,6 +234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 226095547}
   - component: {fileID: 226095548}
+  - component: {fileID: 226095549}
   m_Layer: 6
   m_Name: Hearing
   m_TagString: Untagged
@@ -248,13 +249,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226095546}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.53, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 505126563}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &226095548
 MonoBehaviour:
@@ -268,12 +269,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628405a0567684c48ad5d158c1389361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HearingRange: 1
+  HearingRange: 4.35
   HearNpcLayer:
     serializedVersion: 2
     m_Bits: 64
   NpcsColliders: []
   npcs: []
+--- !u!135 &226095549
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226095546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 21.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &234246247
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +438,7 @@ GameObject:
   - component: {fileID: 344441659}
   - component: {fileID: 344441658}
   - component: {fileID: 344441657}
+  - component: {fileID: 344441664}
   m_Layer: 6
   m_Name: NPC2
   m_TagString: NPC
@@ -445,6 +460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueInteractionIcon: {fileID: 1094837021}
   dialogueBubble: {fileID: 1186493639}
+  voiceSpeech: {fileID: 923349804}
+  agent: {fileID: 344441664}
   opennesToExperience: 0
   conscientiousness: 0
   extraversion: 0
@@ -452,8 +469,11 @@ MonoBehaviour:
   neuroticism: 0
   trustLevel: 0
   isRememberLine: 0
-  timeToRemember: 0
+  timeToRemember: 10
   tempIndex: 0
+  isHearOtherNpc: 0
+  distanceToNpc: 6
+  listOfOthersNpcThemes: []
   listOfDialogues:
   - {fileID: 11400000, guid: 4f3a415603280af4f98b71b3255d07fd, type: 2}
 --- !u!54 &344441658
@@ -564,8 +584,30 @@ Transform:
   - {fileID: 1811247961}
   - {fileID: 923349805}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &344441664
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344441656}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &433548247
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +690,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &433548252
 MonoBehaviour:
@@ -763,10 +805,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1933791979}
   - {fileID: 226095547}
+  - {fileID: 1933791979}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &505126564
 Rigidbody:
@@ -811,6 +853,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueInteractionIcon: {fileID: 1277821094}
   dialogueBubble: {fileID: 637098851}
+  voiceSpeech: {fileID: 226095546}
+  agent: {fileID: 0}
   opennesToExperience: 0
   conscientiousness: 0
   extraversion: 0
@@ -818,8 +862,11 @@ MonoBehaviour:
   neuroticism: 0
   trustLevel: 1
   isRememberLine: 0
-  timeToRemember: 0
+  timeToRemember: 10
   tempIndex: 0
+  isHearOtherNpc: 0
+  distanceToNpc: 0
+  listOfOthersNpcThemes: []
   listOfDialogues:
   - {fileID: 11400000, guid: 07ce67957e607eb42b279a4850e46f61, type: 2}
 --- !u!1 &599167661
@@ -918,7 +965,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &637098851
 GameObject:
@@ -1223,7 +1270,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &923349804
 GameObject:
@@ -1241,7 +1288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &923349805
 Transform:
   m_ObjectHideFlags: 0
@@ -1357,8 +1404,70 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+--- !u!1 &1005424755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005424757}
+  - component: {fileID: 1005424756}
+  m_Layer: 0
+  m_Name: Navmesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1005424756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005424755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 72979c88decf8dd4b997113dcb116d83, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &1005424757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005424755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8934282, y: 11.411269, z: -14.474488}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094837021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,7 +1881,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1558872979
 GameObject:
@@ -1986,7 +2095,7 @@ RectTransform:
   - {fileID: 1277821095}
   - {fileID: 637098852}
   m_Father: {fileID: 505126563}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
