@@ -32,26 +32,32 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X) && npcParameters != null && dialogueWindow.GetComponent<Dialogue>().inDialogue == false)
             {
-                npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
+                //npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
 
-                dialogueWindow.GetComponent<Dialogue>().lines = new string[npcDataOfDialogues.dialogueLines.Length];
+                //dialogueWindow.GetComponent<Dialogue>().lines = new string[npcDataOfDialogues.dialogueLines.Length];
 
-                for (int i = 0; i < npcDataOfDialogues.dialogueLines.Length; i++)
-                {
-                    dialogueWindow.GetComponent<Dialogue>().lines[i] = npcDataOfDialogues.dialogueLines[i];
-                }
+                //for (int i = 0; i < npcDataOfDialogues.dialogueLines.Length; i++)
+                //{
+                //    dialogueWindow.GetComponent<Dialogue>().lines[i] = npcDataOfDialogues.dialogueLines[i];
+                //}
 
-                if (npcParameters.GetComponent<Npc>().tempIndex != 0)
-                {
-                    dialogueWindow.GetComponent<Dialogue>().tempIndex = npcParameters.GetComponent<Npc>().tempIndex;
-                }
+                //if (npcParameters.GetComponent<Npc>().tempIndex != 0)
+                //{
+                //    dialogueWindow.GetComponent<Dialogue>().tempIndex = npcParameters.GetComponent<Npc>().tempIndex;
+                //}
 
 
-                npcParameters.GetComponent<Npc>().dialogueBubble.SetActive(true);
-                npcParameters.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
+                //npcParameters.GetComponent<Npc>().dialogueBubble.SetActive(true);
+                //npcParameters.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
 
+
+                dialogueWindow.GetComponent<Dialogue>().SetDialogue(dialogueWindow.GetComponent<Dialogue>(), npcParameters);
+
+                dialogueWindow.GetComponent<Dialogue>().queueToPlay.Add(npcParameters);
                 dialogueWindow.SetActive(true);
 
+
+                npcParameters.GetComponent<Npc>().voiceSpeech.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -82,39 +88,6 @@ public class PlayerMovement : MonoBehaviour
             npcParameters = other.GetComponent<Npc>();
         }
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.tag == "NPC")
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.X))
-    //        {
-    //            npcDataOfDialogues = other.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
-
-    //            dialogueWindow.GetComponent<Dialogue>().lines = new string[npcDataOfDialogues.dialogueLines.Length];
-
-    //            for (int i = 0; i < npcDataOfDialogues.dialogueLines.Length; i++)
-    //            {
-    //                dialogueWindow.GetComponent<Dialogue>().lines[i] = npcDataOfDialogues.dialogueLines[i];
-    //            }
-
-    //            other.GetComponent<Npc>().dialogueBubble.SetActive(true);
-    //            other.GetComponent<Npc>().dialogueInteractionObject.SetActive(false);
-
-    //            dialogueWindow.SetActive(true);
-
-    //        }
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Z))
-    //    {
-    //        if (dialogueWindow.GetComponent<Dialogue>().inDialogue == true)
-    //        {
-    //            dialogueWindow.GetComponent<Dialogue>().ProcedeDialogue(other.GetComponent<Npc>());
-    //        }
-    //    }
-
-    //}
 
     private void OnTriggerExit(Collider other)
     {

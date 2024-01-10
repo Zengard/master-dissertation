@@ -7,8 +7,10 @@ public class Npc : MonoBehaviour
 {
     public GameObject dialogueInteractionIcon;
     public GameObject dialogueBubble;
-    [SerializeField] private GameObject voiceSpeech;
+    public GameObject voiceSpeech;
     [SerializeField] private NavMeshAgent agent;
+
+    private Dialogue dialogue;
 
     [Space]
     [Header("Personality traits")]
@@ -37,6 +39,11 @@ public class Npc : MonoBehaviour
     public DialogueData[] listOfDialogues;
     //добавить буловую переменную inDialogue;
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         if (isRememberLine == true)
@@ -63,28 +70,27 @@ public class Npc : MonoBehaviour
     /// сделать метод в котором ishearOtherNpc = true
     /// и персонаж анализирует кого он услышал и через передаваемый параметер в заголовок
     /// после чего начинает идти в его сторону по навмешу
-    /// 
-    /// 
-    /// get npchearing parent
-    /// get it's "NPC" script
-    /// get "listOfDialogues"
-    /// get which one is active right now
-    /// get it's TAGS
-    /// compare it with own dialogue TAGS
+
     /// нужно два цикла - один который проходит по всем темам нпс
     /// второй - вложенный, он сравнивает все теги конкретной темы с активной темой нпс 
     /// если находится совпадение, то запоминается индекс первого цикла
-    /// 
-    /// if have matches
-    /// go near npc
+    ///
     /// </summary>
     /// 
 
     public void FindsInterestingThemes(NpcHearing npcsVoice)
     {
         isHearOtherNpc = true;
+
+        if(dialogue == null)
+        {
+            dialogue = Dialogue.instance;
+        }
+
         Npc npc = npcsVoice.transform.parent.GetComponent<Npc>();
         DialogueData npcData = npc.listOfDialogues[0];// 0 replace with correct index in future
+
+        /// add for cycle with list of dialogues above existed cycles
 
         for(int i = 0; i < listOfDialogues[0].tags.Length; i++)
         {
@@ -95,6 +101,7 @@ public class Npc : MonoBehaviour
                     Debug.Log(listOfDialogues[0].tags[i]);
                     agent.SetDestination(npcsVoice.transform.parent.position.normalized);
                     npcToFollow = npcsVoice.transform.parent.position.normalized;
+                    dialogue.queueToPlay.Add(this);                  
                     return;
                 }
                 

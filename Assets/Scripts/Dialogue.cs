@@ -5,10 +5,13 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    public static Dialogue instance;
+
     public TextMeshProUGUI textComponent;
+    public List<Npc> queueToPlay;
 
     //добавить объект класса NPC чтобы ссылаться на него
-    //сделать синглтон чтобы персонажи могли вызывать методы
+    //inDialog перенести в NPC
 
     [TextAreaAttribute]
     public string[] lines;
@@ -19,6 +22,11 @@ public class Dialogue : MonoBehaviour
     public int tempIndex;//////////////////////////////////// проверить на правильность
 
     public bool inDialogue;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void OnEnable()
     {
@@ -84,9 +92,19 @@ public class Dialogue : MonoBehaviour
             StartCoroutine(TypeLine());
         }
         else
-        {
-            inDialogue = false;
+        {           
             tempIndex = 0;
+            queueToPlay.RemoveAt(0);
+
+            if(queueToPlay.Count != 0)
+            {
+                SetDialogue(this, queueToPlay[0]);
+                StopAllCoroutines();
+                StartDialogue();
+                return;
+            }
+
+            inDialogue = false;
             gameObject.SetActive(false);
         }
     }
@@ -102,6 +120,29 @@ public class Dialogue : MonoBehaviour
 
         inDialogue = false;
         gameObject.SetActive(false);
+    }
+
+    public void SetDialogue(Dialogue dialogueWindow, Npc npcParameters)
+    {
+        DialogueData npcDataOfDialogues;
+
+        npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
+
+        dialogueWindow.GetComponent<Dialogue>().lines = new string[npcDataOfDialogues.dialogueLines.Length];
+
+        for (int i = 0; i < npcDataOfDialogues.dialogueLines.Length; i++)
+        {
+            dialogueWindow.GetComponent<Dialogue>().lines[i] = npcDataOfDialogues.dialogueLines[i];
+        }
+
+        if (npcParameters.GetComponent<Npc>().tempIndex != 0)
+        {
+            dialogueWindow.GetComponent<Dialogue>().tempIndex = npcParameters.GetComponent<Npc>().tempIndex;
+        }
+
+
+        npcParameters.GetComponent<Npc>().dialogueBubble.SetActive(true);
+        npcParameters.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
     }
 
 

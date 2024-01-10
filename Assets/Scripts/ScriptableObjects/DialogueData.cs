@@ -13,6 +13,9 @@ public class DialogueData : ScriptableObject
     [TextAreaAttribute]
     public string[] dialogueLines;
 
+    [TextArea(8, 8)]
+    public string fullDialogueSpeech;
+
     public enum TraitsType
     {
         Oppennes = 1 <<0,
