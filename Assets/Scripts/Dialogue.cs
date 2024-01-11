@@ -10,6 +10,9 @@ public class Dialogue : MonoBehaviour
     public TextMeshProUGUI textComponent;
     public List<Npc> queueToPlay;
 
+    [TextArea(8, 8)]
+    public string npcComments;
+
     //добавить объект класса NPC чтобы ссылаться на него
     //inDialog перенести в NPC
 
@@ -18,7 +21,7 @@ public class Dialogue : MonoBehaviour
 
     public float textSpeed;
 
-    private int index;
+    [SerializeField]private int index;
     public int tempIndex;//////////////////////////////////// проверить на правильность
 
     public bool inDialogue;
@@ -50,7 +53,7 @@ public class Dialogue : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if (textComponent.text == lines[index])
+            if (textComponent.text == npcComments || textComponent.text == lines[index])
             {
                 NextLine();
             }
@@ -58,7 +61,10 @@ public class Dialogue : MonoBehaviour
             {////////////////////////////////////////remove in future 
                 StopAllCoroutines();////////////////////////////////////////remove in future 
                 textComponent.text = lines[index];////////////////////////////////////////remove in future 
-            }   ////////////////////////////////////////remove in future       
+            }   ////////////////////////////////////////remove in future
+                
+            //if(textComponent.text == npcComments)
+
 
         }
 
@@ -72,6 +78,14 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
+    private void StartComment()
+    {
+        textComponent.text = string.Empty;
+        index = tempIndex - 1;
+        inDialogue = true;
+        StartCoroutine(TypeComment());
+    }
+
     private IEnumerator TypeLine()
     {
         //type each character 1 by 1 
@@ -81,6 +95,15 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
 
+    }
+
+    private IEnumerator TypeComment()
+    {
+        foreach (char c in npcComments.ToCharArray())
+        {
+            textComponent.text += c;
+            yield return new WaitForSeconds(textSpeed);
+        }
     }
 
     private void NextLine()
@@ -94,13 +117,17 @@ public class Dialogue : MonoBehaviour
         else
         {           
             tempIndex = 0;
+            queueToPlay[0].dialogueBubble.SetActive(false);
             queueToPlay.RemoveAt(0);
 
             if(queueToPlay.Count != 0)
             {
                 SetDialogue(this, queueToPlay[0]);
                 StopAllCoroutines();
-                StartDialogue();
+
+                StartComment();
+
+                //StartDialogue();
                 return;
             }
 
@@ -119,6 +146,13 @@ public class Dialogue : MonoBehaviour
         }
 
         inDialogue = false;
+
+        foreach(var character in queueToPlay)
+        {
+            character.dialogueBubble.SetActive(false);
+        }
+        queueToPlay.Clear();
+
         gameObject.SetActive(false);
     }
 
