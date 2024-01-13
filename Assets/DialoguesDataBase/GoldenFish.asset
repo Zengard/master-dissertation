@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GoldenFish
   m_EditorClassIdentifier: 
   id: 1
-  theme: Gold fish
+  theme: I caught golden fish
   fixedTrait: 2
   tags:
   - Fish

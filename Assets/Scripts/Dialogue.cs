@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using ThangChibaGPT;
 
 public class Dialogue : MonoBehaviour
 {
     public static Dialogue instance;
+    public AIChatController aIChatController;
 
     public TextMeshProUGUI textComponent;
     public List<Npc> queueToPlay;
+
 
     [TextArea(8, 8)]
     public string npcComments;
@@ -83,6 +86,7 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty;
         index = tempIndex - 1;
         inDialogue = true;
+
         StartCoroutine(TypeComment());
     }
 
@@ -125,6 +129,8 @@ public class Dialogue : MonoBehaviour
                 SetDialogue(this, queueToPlay[0]);
                 StopAllCoroutines();
 
+                npcComments = GetComponent<AITestController>().finalGeneratedPhrase;/// change this line to take phrase from npc's scriptableObject
+
                 StartComment();
 
                 //StartDialogue();
@@ -134,6 +140,13 @@ public class Dialogue : MonoBehaviour
             inDialogue = false;
             gameObject.SetActive(false);
         }
+    }
+    
+
+    public void GenerateGPTDialogue(string text)
+    {
+        var context = text.Trim();
+        ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
     }
 
     public void InterruptDialogue(Npc npc)
@@ -146,6 +159,7 @@ public class Dialogue : MonoBehaviour
         }
 
         inDialogue = false;
+        npc.voiceSpeech.SetActive(false);
 
         foreach(var character in queueToPlay)
         {

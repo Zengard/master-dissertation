@@ -34,6 +34,7 @@ public class Npc : MonoBehaviour
     public float distanceToNpc;
     private Vector3 npcToFollow;
     public string[] listOfOthersNpcThemes;
+    public string reactionToTheme;
 
     [Space]
     public DialogueData[] listOfDialogues;
@@ -80,6 +81,8 @@ public class Npc : MonoBehaviour
 
     public void FindsInterestingThemes(NpcHearing npcsVoice)
     {
+        string npcTheme;
+
         isHearOtherNpc = true;
 
         if(dialogue == null)
@@ -96,12 +99,17 @@ public class Npc : MonoBehaviour
         {
             for(int y = 0; y<npcData.tags.Length; y++)
             {
-                if(listOfDialogues[0].tags[i] == npcData.tags[y])
+                if (listOfDialogues[0].tags[i] == npcData.tags[y])
                 {
                     Debug.Log(listOfDialogues[0].tags[i]);
                     agent.SetDestination(npcsVoice.transform.parent.position.normalized);
                     npcToFollow = npcsVoice.transform.parent.position.normalized;
-                    dialogue.queueToPlay.Add(this);                  
+                    dialogue.queueToPlay.Add(this);
+
+                    npcTheme = npcData.theme;
+                    reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
+                    dialogue.GenerateGPTDialogue(reactionToTheme);//начинать здесь генерировать текст GPT, взяв параметры из scriptableObject закрепленного за NPC
+
                     return;
                 }
                 
