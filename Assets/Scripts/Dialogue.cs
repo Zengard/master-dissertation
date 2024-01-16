@@ -37,7 +37,17 @@ public class Dialogue : MonoBehaviour
     private void OnEnable()
     {
 
-        StartDialogue();
+        if(queueToPlay[0].hasComment == true)
+        {
+            StartComment();
+            queueToPlay[0].hasComment = false;
+
+        }
+        else
+        {
+            StartDialogue();
+        }
+    
     }
 
     private void OnDisable()
@@ -83,6 +93,7 @@ public class Dialogue : MonoBehaviour
 
     private void StartComment()
     {
+        npcComments = queueToPlay[0].GetComponent<AITestController>().finalGeneratedPhrase;
         textComponent.text = string.Empty;
         index = tempIndex - 1;
         inDialogue = true;
@@ -127,13 +138,10 @@ public class Dialogue : MonoBehaviour
             if(queueToPlay.Count != 0)
             {
                 SetDialogue(this, queueToPlay[0]);
-                StopAllCoroutines();
-
-                npcComments = GetComponent<AITestController>().finalGeneratedPhrase;/// change this line to take phrase from npc's scriptableObject
+                StopAllCoroutines();           
 
                 StartComment();
 
-                //StartDialogue();
                 return;
             }
 
@@ -143,11 +151,11 @@ public class Dialogue : MonoBehaviour
     }
     
 
-    public void GenerateGPTDialogue(string text)
-    {
-        var context = text.Trim();
-        ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
-    }
+    //public void GenerateGPTDialogue(string text)
+    //{
+    //    var context = text.Trim();
+    //    ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
+    //}
 
     public void InterruptDialogue(Npc npc)
     {

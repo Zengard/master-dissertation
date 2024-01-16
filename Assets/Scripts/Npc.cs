@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using ThangChibaGPT;
 
 public class Npc : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Npc : MonoBehaviour
     [Range(0, 1)] public float extraversion;
     [Range(0, 1)] public float agreeableness;
     [Range(0, 1)] public float neuroticism;
+    public float choosenTrait;
 
     [Space]
     [Header("Trust level")]
@@ -30,9 +32,10 @@ public class Npc : MonoBehaviour
 
     [Space]
     [Header("Other NPC's dialogue themes")]
-    public bool isHearOtherNpc;
+    public bool goToOtherNPC;
+    public bool hasComment;
     public float distanceToNpc;
-    private Vector3 npcToFollow;
+    [SerializeField] private Vector3 npcToFollow;
     public string[] listOfOthersNpcThemes;
     public string reactionToTheme;
 
@@ -57,13 +60,15 @@ public class Npc : MonoBehaviour
             {
                 tempIndex = 0;
                 timeToRemember = _timeToRemember;
+                hasComment = false;
                 isRememberLine = false;
             }
         }
 
-        if(isHearOtherNpc == true)
+        if(goToOtherNPC == true)
         {
-            agent.SetDestination(npcToFollow * distanceToNpc);
+            agent.SetDestination(npcToFollow  * distanceToNpc);
+
         }
     }
 
@@ -81,9 +86,7 @@ public class Npc : MonoBehaviour
 
     public void FindsInterestingThemes(NpcHearing npcsVoice)
     {
-        string npcTheme;
-
-        isHearOtherNpc = true;
+        string npcTheme;    
 
         if(dialogue == null)
         {
@@ -102,23 +105,44 @@ public class Npc : MonoBehaviour
                 if (listOfDialogues[0].tags[i] == npcData.tags[y])
                 {
                     Debug.Log(listOfDialogues[0].tags[i]);
-                    agent.SetDestination(npcsVoice.transform.parent.position.normalized);
-                    npcToFollow = npcsVoice.transform.parent.position.normalized;
-                    dialogue.queueToPlay.Add(this);
 
-                    npcTheme = npcData.theme;
-                    reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
-                    dialogue.GenerateGPTDialogue(reactionToTheme);//начинать здесь генерировать текст GPT, взяв параметры из scriptableObject закрепленного за NPC
+                   choosenTrait = npcData.ChoseTrait(npcData.fixedTrait, choosenTrait, opennesToExperience, conscientiousness, extraversion, agreeableness, neuroticism);                   
+                   
+                    if(choosenTrait == 1)
+                    {
+                        npcToFollow = npcsVoice.transform.parent.position.normalized;
+                        dialogue.queueToPlay.Add(this);
+                        goToOtherNPC = true;
+                        npcTheme = npcData.theme;
+                        reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
+                        GenerateGPTDialogue(reactionToTheme);
 
-                    return;
+                        return;
+                    }
+                    else
+                    {
+                        npcTheme = npcData.theme;
+                        reactionToTheme = "Tell you have heard a story about: " + "'" + npcTheme + "'" + " in 10 words";
+                        GenerateGPTDialogue(reactionToTheme);
+                        hasComment = true;
+                        return;
+                    }
+
                 }
                 
             }
          
         }
         Debug.Log("no matches");
-        isHearOtherNpc = false;
+        goToOtherNPC = false;
     }
+
+    public void GenerateGPTDialogue(string text)
+    {
+        var context = text.Trim();
+        ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
+    }
+
 
     private bool CompareTags()
     {

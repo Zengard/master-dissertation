@@ -27,11 +27,9 @@ public class NpcHearing : MonoBehaviour
         {           
             if (other is CapsuleCollider)
             {
-                if (other.GetComponent<Npc>().isHearOtherNpc == false)
+                if (other.GetComponent<Npc>().goToOtherNPC == false)
                 {
                     npcs.Add(other.gameObject.GetComponent<Npc>());
-                    other.GetComponent<Npc>().isHearOtherNpc = true;
-
                     other.GetComponent<Npc>().FindsInterestingThemes(this);
                 }
             }
@@ -45,7 +43,7 @@ public class NpcHearing : MonoBehaviour
             if (other is CapsuleCollider)
             {
                     npcs.Remove(other.gameObject.GetComponent<Npc>());
-                    other.GetComponent<Npc>().isHearOtherNpc = false;
+                    other.GetComponent<Npc>().goToOtherNPC = false;
                 
             }
         }
