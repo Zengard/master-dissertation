@@ -23,7 +23,13 @@ public class DialogueData : ScriptableObject
     public string[] dialogueLines;
 
     [TextArea(8, 8)]
-    public string fullDialogueSpeech;  
+    public string fullDialogueSpeech;
+
+    [TextArea(8, 8)]
+    public string commentPhrase;
+
+    [TextArea(8, 8)]
+    public string gapPhrase;
 
     public float ChoseTrait(TraitsType fixedTrait, float choosenTrait, float oppennes, float conscientiousness, float extraversion, float agreeableness, float neuroticism) 
     {

@@ -6,28 +6,35 @@ using ThangChibaGPT;
 
 public class Dialogue : MonoBehaviour
 {
+   public enum UseAi {HasAI,  HasNotAI};
+   public UseAi useAi;
+
     public static Dialogue instance;
-    public AIChatController aIChatController;
 
     public TextMeshProUGUI textComponent;
+    [SerializeField] private Npc currentlyActiveNPC;
     public List<Npc> queueToPlay;
+    public List<Npc> afterCommentQueue;
 
 
     [TextArea(8, 8)]
     public string npcComments;
 
-    //добавить объект класса NPC чтобы ссылаться на него
-    //inDialog перенести в NPC
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ NPC пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+    //inDialog пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ NPC
 
     [TextAreaAttribute]
     public string[] lines;
 
     public float textSpeed;
+    private float _defaultTextSpeed;
 
     [SerializeField]private int index;
-    public int tempIndex;//////////////////////////////////// проверить на правильность
+    public int tempIndex;
 
     public bool inDialogue;
+
+
 
     private void Awake()
     {
@@ -58,7 +65,7 @@ public class Dialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _defaultTextSpeed = textSpeed;
     }
 
     // Update is called once per frame
@@ -68,16 +75,15 @@ public class Dialogue : MonoBehaviour
         {
             if (textComponent.text == npcComments || textComponent.text == lines[index])
             {
+                textSpeed = _defaultTextSpeed;
                 NextLine();
             }
             else
             {////////////////////////////////////////remove in future 
-                StopAllCoroutines();////////////////////////////////////////remove in future 
-                textComponent.text = lines[index];////////////////////////////////////////remove in future 
+                //StopAllCoroutines();////////////////////////////////////////remove in future 
+                //textComponent.text = lines[index];////////////////////////////////////////remove in future 
+                textSpeed /= 2;
             }   ////////////////////////////////////////remove in future
-                
-            //if(textComponent.text == npcComments)
-
 
         }
 
@@ -93,13 +99,39 @@ public class Dialogue : MonoBehaviour
 
     private void StartComment()
     {
-        npcComments = queueToPlay[0].GetComponent<AITestController>().finalGeneratedPhrase;
+        if(useAi == UseAi.HasAI)
+        {
+            npcComments = queueToPlay[0].GetComponent<AITestController>().finalGeneratedPhrase;
+        }
+        else
+        {
+            npcComments = queueToPlay[0].listOfDialogues[queueToPlay[0].triggeredDialogue].commentPhrase; //0 replace with correct index in future
+        }
         textComponent.text = string.Empty;
         index = tempIndex - 1;
         inDialogue = true;
 
-        StartCoroutine(TypeComment());
+        StartCoroutine(TypeComment(npcComments));
     }
+
+    private void StartGap()
+    {
+
+        if(queueToPlay[0].triggeredDialogue != -1)
+        {
+            npcComments = queueToPlay[0].listOfDialogues[queueToPlay[0].triggeredDialogue].gapPhrase;
+        }
+        else
+        {
+            npcComments = queueToPlay[0].listOfDialogues[0].gapPhrase;
+        }
+
+        textComponent.text = string.Empty;
+        index = tempIndex - 1;
+        inDialogue = true;
+        StartCoroutine(TypeComment(npcComments));
+    }
+
 
     private IEnumerator TypeLine()
     {
@@ -110,11 +142,25 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
 
+        foreach (Npc npc in queueToPlay)
+        {
+            if (npc.hasComment == true)
+            {
+                if (npc.choosenTrait == 1)
+                {
+                    npc.hasComment = false;
+                    OtherNPCInterruptDialogue(npc, currentlyActiveNPC);
+                    break;
+                }
+               
+            }
+        }
+
     }
 
-    private IEnumerator TypeComment()
+    private IEnumerator TypeComment(string comment)
     {
-        foreach (char c in npcComments.ToCharArray())
+        foreach (char c in comment.ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -133,29 +179,65 @@ public class Dialogue : MonoBehaviour
         {           
             tempIndex = 0;
             queueToPlay[0].dialogueBubble.SetActive(false);
+            queueToPlay[0].voiceSpeech.SetActive(false);
+            queueToPlay[0].triggeredDialogue = -1;
+            afterCommentQueue.Add(queueToPlay[0]);
             queueToPlay.RemoveAt(0);
 
             if(queueToPlay.Count != 0)
             {
-                SetDialogue(this, queueToPlay[0]);
-                StopAllCoroutines();           
+                queueToPlay[0].goToOtherNPC = false;
 
-                StartComment();
+                SetDialogue(this, queueToPlay[0]);
+                StopAllCoroutines();
+
+                if (queueToPlay[0].hasComment)
+                {
+                    StartComment();
+                    queueToPlay[0].hasComment = false;
+                }
+                else if (queueToPlay[0].tempIndex != 0)
+                {
+                    StartGap();
+                }
+                else
+                {
+                    StartDialogue();
+                }
 
                 return;
             }
+            
+                foreach(var character in afterCommentQueue)
+            {
+                    character.triggeredDialogue = -1;
+                    character.isFoundInterestingWord = false;
+                    character.timeToRemember = 0;
+                    character.isRememberLine = true;
+                    character.agent.ResetPath();
+                //character.choosenTrait = 0;
+
+                if (character.GetComponent<MoveNpc>() != null)
+                {
+                    character.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+                   character.GetComponent<MoveNpc>().enabled = true;                    
+                }
+
+                if (character.GetComponent<ResetPos>() != null)
+                {
+                    character.GetComponent<ResetPos>().speed = character.GetComponent<ResetPos>().defaultSpeed;
+                }
+
+            }
+
+                afterCommentQueue.Clear();
+            
 
             inDialogue = false;
+            currentlyActiveNPC = null;
             gameObject.SetActive(false);
         }
     }
-    
-
-    //public void GenerateGPTDialogue(string text)
-    //{
-    //    var context = text.Trim();
-    //    ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
-    //}
 
     public void InterruptDialogue(Npc npc)
     {
@@ -169,20 +251,58 @@ public class Dialogue : MonoBehaviour
         inDialogue = false;
         npc.voiceSpeech.SetActive(false);
 
-        foreach(var character in queueToPlay)
+        afterCommentQueue.Clear();
+
+        foreach (var character in queueToPlay)
         {
             character.dialogueBubble.SetActive(false);
+            character.isFoundInterestingWord = false;
+
+            if (character.GetComponent<ResetPos>() != null)
+            {
+                character.GetComponent<ResetPos>().speed = character.GetComponent<ResetPos>().defaultSpeed;
+            }
         }
         queueToPlay.Clear();
 
         gameObject.SetActive(false);
     }
 
+    public void OtherNPCInterruptDialogue(Npc interruping, Npc interruped)
+    {
+        if (index != 0)
+        {
+            interruped.tempIndex = index;
+            interruped.isRememberLine = true;
+        }
+
+        inDialogue = false;
+
+        foreach (var character in queueToPlay)
+        {
+            character.dialogueBubble.SetActive(false);
+            character.voiceSpeech.SetActive(false);
+        }
+
+        interruping.goToOtherNPC = false;
+        interruping.isHearOtherNpc = false; // maybe delete after tests
+        //interruping.isFoundInterestingWord = false;
+        SetDialogue(this, interruping);
+        StartComment();
+    }
+
     public void SetDialogue(Dialogue dialogueWindow, Npc npcParameters)
     {
         DialogueData npcDataOfDialogues;
 
-        npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
+        if(npcParameters.GetComponent<Npc>().triggeredDialogue > -1)
+        {
+            npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[npcParameters.GetComponent<Npc>().triggeredDialogue];
+        }
+        else
+        {
+            npcDataOfDialogues = npcParameters.GetComponent<Npc>().listOfDialogues[0];// 0 replace with correct index in future
+        }
 
         dialogueWindow.GetComponent<Dialogue>().lines = new string[npcDataOfDialogues.dialogueLines.Length];
 
@@ -196,27 +316,15 @@ public class Dialogue : MonoBehaviour
             dialogueWindow.GetComponent<Dialogue>().tempIndex = npcParameters.GetComponent<Npc>().tempIndex;
         }
 
+        if (npcParameters.gameObject.GetComponent<ResetPos>() != null)
+        {
+            npcParameters.gameObject.GetComponent<ResetPos>().speed = 0;
+        }
 
         npcParameters.GetComponent<Npc>().dialogueBubble.SetActive(true);
+        npcParameters.voiceSpeech.SetActive(true);
         npcParameters.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
-    }
-
-
-    private void ProceedDialogue()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {////////////////////////////////////////remove in future 
-                StopAllCoroutines();////////////////////////////////////////remove in future 
-                textComponent.text = lines[index];////////////////////////////////////////remove in future 
-            }   ////////////////////////////////////////remove in future       
-
-        }
+        currentlyActiveNPC = npcParameters;
     }
 
 }

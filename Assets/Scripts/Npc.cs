@@ -6,12 +6,19 @@ using ThangChibaGPT;
 
 public class Npc : MonoBehaviour
 {
+    [Header("Required parametes")]
+    public float radius = 3f;
+    private float distance;
     public GameObject dialogueInteractionIcon;
     public GameObject dialogueBubble;
     public GameObject voiceSpeech;
-    [SerializeField] private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     private Dialogue dialogue;
+    [Space]
+    [Header("Active dialogue data")]
+    [TextArea(8, 8)]
+    public string dialogueText;
 
     [Space]
     [Header("Personality traits")]
@@ -32,20 +39,25 @@ public class Npc : MonoBehaviour
 
     [Space]
     [Header("Other NPC's dialogue themes")]
+    public bool isHearOtherNpc = false;
+    public bool isFoundInterestingWord = false;
     public bool goToOtherNPC;
     public bool hasComment;
     public float distanceToNpc;
-    [SerializeField] private Vector3 npcToFollow;
-    public string[] listOfOthersNpcThemes;
+    [SerializeField] private Vector3 npcToFollowPosition;
+    [SerializeField] private Npc npcToFollow;
     public string reactionToTheme;
 
     [Space]
+    [Header ("Current character's dialogue datas")]
     public DialogueData[] listOfDialogues;
+    public int triggeredDialogue = -1;
     //добавить буловую переменную inDialogue;
+
 
     private void Start()
     {
-        
+        _timeToRemember = timeToRemember;
     }
 
     private void Update()
@@ -65,11 +77,36 @@ public class Npc : MonoBehaviour
             }
         }
 
+        if(isHearOtherNpc == true && dialogue != null)
+        {
+            dialogueText = dialogue.textComponent.text;
+        }
+
         if(goToOtherNPC == true)
         {
-            agent.SetDestination(npcToFollow  * distanceToNpc);
+            //agent.destination = npcToFollow;
+            distance = Vector3.Distance(transform.position, npcToFollowPosition);
+            agent.destination = npcToFollowPosition;
+            agent.stoppingDistance = npcToFollow.radius;
+
+            if(npcToFollow.radius >= distance)
+            {
+                goToOtherNPC = false;
+                agent.destination = transform.position;
+                npcToFollow = null;
+                agent.ResetPath();
+            }
+
+            if (transform.position == agent.destination)
+            {
+                goToOtherNPC = false;
+                npcToFollow = null;
+                agent.ResetPath();
+            }
+
 
         }
+        
     }
 
     /// <summary>
@@ -83,6 +120,55 @@ public class Npc : MonoBehaviour
     ///
     /// </summary>
     /// 
+
+    public void FindInterestingWords(NpcHearing npcsVoice)
+    {
+        if(isFoundInterestingWord == false)
+        {
+            var found = 0;
+            if (dialogue == null)
+            {
+                dialogue = Dialogue.instance;
+            }
+
+            Npc npc = npcsVoice.transform.parent.GetComponent<Npc>();
+            DialogueData npcData = npc.listOfDialogues[0];
+
+            for(int x = 0; x < listOfDialogues.Length; x++)
+            {
+                for (int i = 0; i < listOfDialogues[x].tags.Length; i++)
+                {
+                    for (int y = 0; y < dialogueText.Length; y++)
+                    {
+                        found = dialogueText.IndexOf(listOfDialogues[x].tags[i]);
+                    }
+                    Debug.Log(found);
+
+                    if (found > 0)
+                    {
+                        triggeredDialogue = x;
+                        Debug.Log("Found word: " + listOfDialogues[x].tags[i]);
+                        isFoundInterestingWord = true;
+
+                        if (gameObject.GetComponent<MoveNpc>() != null)
+                        {
+                            gameObject.GetComponent<MoveNpc>().enabled = false;
+                            agent.enabled = true;
+                        }
+
+                        if(gameObject.GetComponent<ResetPos>() != null)
+                        {
+                            gameObject.GetComponent<ResetPos>().speed = 0;
+                        }
+
+                       // npcData = npc.listOfDialogues[x];
+                        DefineBehaviour(npcData, npcsVoice);
+                        found = 0;                       
+                    }
+                }
+            }
+        }
+    }
 
     public void FindsInterestingThemes(NpcHearing npcsVoice)
     {
@@ -104,19 +190,17 @@ public class Npc : MonoBehaviour
             {
                 if (listOfDialogues[0].tags[i] == npcData.tags[y])
                 {
-                    Debug.Log(listOfDialogues[0].tags[i]);
-
-                   choosenTrait = npcData.ChoseTrait(npcData.fixedTrait, choosenTrait, opennesToExperience, conscientiousness, extraversion, agreeableness, neuroticism);                   
+                   choosenTrait = npcData.ChoseTrait(npcData.fixedTrait, choosenTrait, opennesToExperience, 
+                       conscientiousness, extraversion, agreeableness, neuroticism);                   
                    
                     if(choosenTrait == 1)
                     {
-                        npcToFollow = npcsVoice.transform.parent.position.normalized;
+                        npcToFollowPosition = npcsVoice.transform.parent.position;
                         dialogue.queueToPlay.Add(this);
                         goToOtherNPC = true;
                         npcTheme = npcData.theme;
                         reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
                         GenerateGPTDialogue(reactionToTheme);
-
                         return;
                     }
                     else
@@ -137,21 +221,65 @@ public class Npc : MonoBehaviour
         goToOtherNPC = false;
     }
 
+    private void DefineBehaviour(DialogueData npcData, NpcHearing npcsVoice)
+    {
+        string npcTheme;
+        choosenTrait = npcData.ChoseTrait(npcData.fixedTrait, choosenTrait, opennesToExperience, conscientiousness, extraversion, agreeableness, neuroticism);
+
+        if (choosenTrait == 1)
+        {
+            npcToFollowPosition = npcsVoice.transform.parent.position;
+            npcToFollow = npcsVoice.transform.parent.GetComponent<Npc>();
+            dialogue.queueToPlay.Insert(0, this);
+            goToOtherNPC = true;
+            npcTheme = npcData.theme;
+            reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
+            if (dialogue.useAi == Dialogue.UseAi.HasAI)
+            {
+                GenerateGPTDialogue(reactionToTheme);
+            }
+            hasComment = true;
+            return;
+        }
+        else if (choosenTrait < 1 && choosenTrait >0) 
+        {
+            npcToFollowPosition = npcsVoice.transform.parent.position;
+            npcToFollow = npcsVoice.transform.parent.GetComponent<Npc>();
+            dialogue.queueToPlay.Add(this);
+            goToOtherNPC = true;
+            npcTheme = npcData.theme;
+            reactionToTheme = "React to this text " + "'" + npcTheme + "'" + " in 10 words";
+            if(dialogue.useAi == Dialogue.UseAi.HasAI)
+            {
+                GenerateGPTDialogue(reactionToTheme);
+            }
+            hasComment = true;
+            return;
+        }
+        else
+        {
+            npcTheme = npcData.theme;
+            reactionToTheme = "Tell you have heard a story about: " + "'" + npcTheme + "'" + " in 10 words";
+            if (dialogue.useAi == Dialogue.UseAi.HasAI)
+            {
+                GenerateGPTDialogue(reactionToTheme);
+            }
+            isRememberLine = true;
+            hasComment = true;
+            return;
+        }
+    }
+
     public void GenerateGPTDialogue(string text)
     {
         var context = text.Trim();
         ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
     }
 
-
-    private bool CompareTags()
+    void OnDrawGizmosSelected()
     {
-        return true;
-    }
-
-
-    private void MemorySpeach()
-    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
 
     }
 

@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Npc npcParameters; // make private in future
     private bool _canSpeak;
 
+    [Space]
+    [SerializeField] private GameObject exit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * _speed);
+
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
 
 
         if (_canSpeak)
@@ -55,9 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
                 dialogueWindow.GetComponent<Dialogue>().queueToPlay.Add(npcParameters);
                 dialogueWindow.SetActive(true);
-
-
-                npcParameters.GetComponent<Npc>().voiceSpeech.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -82,10 +84,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "NPC")
         {
-            other.GetComponent<Npc>().dialogueInteractionIcon.SetActive(true);
+            if(dialogueWindow.GetComponent<Dialogue>().inDialogue == false)
+            {
+                other.GetComponent<Npc>().dialogueInteractionIcon.SetActive(true);
+            }
 
             _canSpeak = true;
             npcParameters = other.GetComponent<Npc>();
+        }
+
+
+        if(other.gameObject.tag == "Exit")
+        {
+            exit.SetActive(true);
         }
     }
 
@@ -95,20 +106,19 @@ public class PlayerMovement : MonoBehaviour
         {
             _canSpeak = false;
 
-            if (dialogueWindow.GetComponent<Dialogue>().inDialogue == true)
-            {
+            //if (dialogueWindow.GetComponent<Dialogue>().inDialogue == true)
+            //{
 
-                dialogueWindow.GetComponent<Dialogue>().InterruptDialogue(other.GetComponent<Npc>());
+            //    dialogueWindow.GetComponent<Dialogue>().InterruptDialogue(other.GetComponent<Npc>());
 
-            }
+            //}
 
             other.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
-            other.GetComponent<Npc>().dialogueBubble.SetActive(false);
-            dialogueWindow.SetActive(false);
+           // other.GetComponent<Npc>().dialogueBubble.SetActive(false);
+            //dialogueWindow.SetActive(false);
 
 
         }
-
 
     }
 }

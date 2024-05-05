@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: Npc3Dialogue
+  m_Name: NPC5Default
   m_EditorClassIdentifier: 
   id: 0
-  theme: Selling fish
-  fixedTrait: 8
+  theme: ' secret dungeon'
+  fixedTrait: 0
   tags:
-  - Fish
+  - look for dungeon
   dialogueLines:
-  - Recently i sold huge amount of fish
-  - It was jackpot
+  - I have heard there is a secret dungeon around
+  - 'But i have never seen it '
+  - That's interisting because i live there all of my life
+  - And never seen it
   fullDialogueSpeech: 
+  commentPhrase: Hey you hear that story about secret dungeon too ?!
+  gapPhrase: So yeah back to dungeon

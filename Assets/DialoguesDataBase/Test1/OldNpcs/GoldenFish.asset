@@ -21,10 +21,12 @@ MonoBehaviour:
   - Fishing
   dialogueLines:
   - You won't believe what happened with me recently!
-  - I was fishing as usual. When suddenly my road started shaking
-  - 'I immediately began to pull it and when I caught the fish i was shocked '
+  - I was fishing as usual. When suddenly my road started shaking while i ate banana
+  - 'Then I immediately began to pull it and when I caught the fish i was shocked '
   - It was most rarest fish ever known. The gold one!
   fullDialogueSpeech: "You won't believe what happened with me recently!\nI was fishing
     as usual. When suddenly my road started shaking\nI immediately began to pull
     it and when I caught the fish i was shocked \nIt was most rarest fish ever known.
     The gold one!"
+  commentPhrase: 'Hey! You talking about golden fish ? '
+  gapPhrase: So, back to my story about golden fish

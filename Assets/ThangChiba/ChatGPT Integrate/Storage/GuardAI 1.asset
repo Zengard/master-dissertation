@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b8ea657ecdc450eb1ee0dab4892a200, type: 3}
-  m_Name: AiText
+  m_Name: GuardAI 1
   m_EditorClassIdentifier: 
   clearHistoryOnStart: 1
-  maxSendCount: 10
-  temperature: 0.8
+  maxSendCount: 9
+  temperature: 0.7
   maxTokens: 100
   trains:
   - role: system
-    content: You are farmer in fantasy world
-  messages:
-  - role: user
-    content: React to this text 'I caught golden fish' in 10 words
+    content: You are fantasy guard
+  messages: []

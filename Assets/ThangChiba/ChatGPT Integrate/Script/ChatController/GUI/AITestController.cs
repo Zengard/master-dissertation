@@ -1,7 +1,4 @@
 using UnityEngine;
-
-
-
 namespace ThangChibaGPT
 {
     public class AITestController : AIChatController
