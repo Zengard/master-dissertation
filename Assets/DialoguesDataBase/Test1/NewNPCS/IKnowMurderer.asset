@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: GuardDefault
+  m_Name: IKnowMurderer
   m_EditorClassIdentifier: 
   id: 0
   theme: 
-  fixedTrait: 0
+  fixedTrait: 2
   tags:
-  - 
-  - 
-  - Shrine
+  - someone were killed
   dialogueLines:
-  - go your way stranger
-  - don't bother me
+  - I guess I have seen him 2 days ago
+  - In main tavern
+  - Maybe we should check it sometime later
   fullDialogueSpeech: 
-  commentPhrase: 
-  gapPhrase: 
+  commentPhrase: Guys about murderer
+  gapPhrase: Back to murderer

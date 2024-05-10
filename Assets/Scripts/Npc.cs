@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using ThangChibaGPT;
+using TMPro;
 
 public class Npc : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Npc : MonoBehaviour
     public GameObject dialogueInteractionIcon;
     public GameObject dialogueBubble;
     public GameObject voiceSpeech;
+    public TextMeshProUGUI interestingWordPopUp;
+    public string npcName;
     public NavMeshAgent agent;
 
     private Dialogue dialogue;
@@ -50,8 +53,12 @@ public class Npc : MonoBehaviour
 
     [Space]
     [Header ("Current character's dialogue datas")]
-    public DialogueData[] listOfDialogues;
+    public List<DialogueData> listOfDialogues;
     public int triggeredDialogue = -1;
+
+    [Space]
+    [Space]
+    public Material dialogueColor;
     //добавить буловую переменную inDialogue;
 
 
@@ -62,6 +69,16 @@ public class Npc : MonoBehaviour
 
     private void Update()
     {
+        if (isFoundInterestingWord == true)
+        {
+            ShowPopUp();
+        }
+       //else if (isFoundInterestingWord == false)
+       // {
+       //     RemovePopUp();
+       //     Debug.Log(npcName + ": disable popup");
+       // }
+
         if (isRememberLine == true)
         {
             if (timeToRemember > 0)
@@ -74,6 +91,7 @@ public class Npc : MonoBehaviour
                 timeToRemember = _timeToRemember;
                 hasComment = false;
                 isRememberLine = false;
+                isFoundInterestingWord = false;
             }
         }
 
@@ -100,12 +118,13 @@ public class Npc : MonoBehaviour
             if (transform.position == agent.destination)
             {
                 goToOtherNPC = false;
+                agent.destination = transform.position;
                 npcToFollow = null;
                 agent.ResetPath();
             }
 
 
-        }
+        }   
         
     }
 
@@ -134,7 +153,7 @@ public class Npc : MonoBehaviour
             Npc npc = npcsVoice.transform.parent.GetComponent<Npc>();
             DialogueData npcData = npc.listOfDialogues[0];
 
-            for(int x = 0; x < listOfDialogues.Length; x++)
+            for(int x = 0; x < listOfDialogues.Count; x++)
             {
                 for (int i = 0; i < listOfDialogues[x].tags.Length; i++)
                 {
@@ -142,13 +161,15 @@ public class Npc : MonoBehaviour
                     {
                         found = dialogueText.IndexOf(listOfDialogues[x].tags[i]);
                     }
-                    Debug.Log(found);
+                    //Debug.Log(found);
 
                     if (found > 0)
                     {
                         triggeredDialogue = x;
-                        Debug.Log("Found word: " + listOfDialogues[x].tags[i]);
+                        //Debug.Log("Found word: " + listOfDialogues[x].tags[i]);
                         isFoundInterestingWord = true;
+
+                        interestingWordPopUp.text = listOfDialogues[x].tags[i];
 
                         if (gameObject.GetComponent<MoveNpc>() != null)
                         {
@@ -217,7 +238,7 @@ public class Npc : MonoBehaviour
             }
          
         }
-        Debug.Log("no matches");
+       // Debug.Log("no matches");
         goToOtherNPC = false;
     }
 
@@ -275,6 +296,21 @@ public class Npc : MonoBehaviour
         var context = text.Trim();
         ChatManager.Instance.ChatGPT.Send(context, GetComponent<AITestController>());
     }
+
+    private void ShowPopUp()
+    {
+        if(interestingWordPopUp.alpha < 1) 
+        {
+            interestingWordPopUp.alpha += Time.deltaTime;
+            Debug.Log(npcName + ": Search word");
+        }
+    }
+
+    public void RemovePopUp()
+    { 
+            interestingWordPopUp.alpha = 0;
+    }
+
 
     void OnDrawGizmosSelected()
     {

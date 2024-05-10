@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     [SerializeField] private Npc npcParameters; // make private in future
-    private bool _canSpeak;
+    [SerializeField] private bool _canSpeak;
 
     [Space]
     [SerializeField] private GameObject exit;
@@ -80,11 +80,31 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "NPC")
+    //    {
+    //        if(dialogueWindow.GetComponent<Dialogue>().inDialogue == false)
+    //        {
+    //            other.GetComponent<Npc>().dialogueInteractionIcon.SetActive(true);
+    //        }
+
+    //        _canSpeak = true;
+    //        npcParameters = other.GetComponent<Npc>();
+    //    }
+
+
+    //    if(other.gameObject.tag == "Exit")
+    //    {
+    //        exit.SetActive(true);
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "NPC")
         {
-            if(dialogueWindow.GetComponent<Dialogue>().inDialogue == false)
+            if (dialogueWindow.GetComponent<Dialogue>().inDialogue == false)
             {
                 other.GetComponent<Npc>().dialogueInteractionIcon.SetActive(true);
             }
@@ -94,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if(other.gameObject.tag == "Exit")
+        if (other.gameObject.tag == "Exit")
         {
             exit.SetActive(true);
         }
@@ -105,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.tag == "NPC")
         {
             _canSpeak = false;
-
+            npcParameters = null;
             //if (dialogueWindow.GetComponent<Dialogue>().inDialogue == true)
             //{
 

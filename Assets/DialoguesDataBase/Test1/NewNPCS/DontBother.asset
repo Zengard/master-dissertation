@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: GuardDefault
+  m_Name: DontBother
   m_EditorClassIdentifier: 
-  id: 0
-  theme: 
-  fixedTrait: 0
+  id: 312
+  theme: Strange guard
+  fixedTrait: 4
   tags:
-  - 
-  - 
-  - Shrine
-  dialogueLines:
-  - go your way stranger
   - don't bother me
+  - go your way stranger
+  - ' stranger'
+  dialogueLines:
+  - He is strange one
+  - He knows something about secret path
+  - But doesn't want to talk
+  - Maybe some one else know more about it
   fullDialogueSpeech: 
-  commentPhrase: 
-  gapPhrase: 
+  commentPhrase: Hey, i heard you talked with the guard, am i right ?
+  gapPhrase: Back to guard

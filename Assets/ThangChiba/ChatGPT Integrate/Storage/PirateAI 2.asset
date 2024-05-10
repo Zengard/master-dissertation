@@ -9,19 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: GuardDefault
+  m_Script: {fileID: 11500000, guid: 7b8ea657ecdc450eb1ee0dab4892a200, type: 3}
+  m_Name: PirateAI 2
   m_EditorClassIdentifier: 
-  id: 0
-  theme: 
-  fixedTrait: 0
-  tags:
-  - 
-  - 
-  - Shrine
-  dialogueLines:
-  - go your way stranger
-  - don't bother me
-  fullDialogueSpeech: 
-  commentPhrase: 
-  gapPhrase: 
+  clearHistoryOnStart: 1
+  maxSendCount: 9
+  temperature: 0.7
+  maxTokens: 100
+  trains:
+  - role: system
+    content: You are fantasy pirate
+  messages: []

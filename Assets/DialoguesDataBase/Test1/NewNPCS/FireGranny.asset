@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: GuardDefault
+  m_Name: FireGranny
   m_EditorClassIdentifier: 
   id: 0
   theme: 
   fixedTrait: 0
   tags:
-  - 
-  - 
-  - Shrine
+  - burning forest
   dialogueLines:
-  - go your way stranger
-  - don't bother me
+  - My granny live near one of those forests
+  - I hope she is okay
   fullDialogueSpeech: 
-  commentPhrase: 
-  gapPhrase: 
+  commentPhrase: I have heard you speak about burning forest
+  gapPhrase: About my granny

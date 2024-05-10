@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: GuardDefault
+  m_Name: FireForest
   m_EditorClassIdentifier: 
   id: 0
-  theme: 
-  fixedTrait: 0
+  theme: Fire in forest
+  fixedTrait: 3
   tags:
-  - 
-  - 
-  - Shrine
+  - Hot summer
+  - burning forest
   dialogueLines:
-  - go your way stranger
-  - don't bother me
+  - There will be little harvest
+  - The third forest is already burning
+  - For the last month
+  - Who knows, when this will ended
   fullDialogueSpeech: 
-  commentPhrase: 
-  gapPhrase: 
+  commentPhrase: This year summer is really hot
+  gapPhrase: So back to forest

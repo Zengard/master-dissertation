@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using ThangChibaGPT;
 
@@ -11,6 +12,7 @@ public class Dialogue : MonoBehaviour
 
     public static Dialogue instance;
 
+    public TextMeshProUGUI npcName;
     public TextMeshProUGUI textComponent;
     [SerializeField] private Npc currentlyActiveNPC;
     public List<Npc> queueToPlay;
@@ -35,11 +37,15 @@ public class Dialogue : MonoBehaviour
     public bool inDialogue;
 
 
+    Image image;
+
 
     private void Awake()
     {
         instance = this;
     }
+
+    
 
     private void OnEnable()
     {
@@ -66,6 +72,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         _defaultTextSpeed = textSpeed;
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -181,6 +188,7 @@ public class Dialogue : MonoBehaviour
             queueToPlay[0].dialogueBubble.SetActive(false);
             queueToPlay[0].voiceSpeech.SetActive(false);
             queueToPlay[0].triggeredDialogue = -1;
+            queueToPlay[0].RemovePopUp();
             afterCommentQueue.Add(queueToPlay[0]);
             queueToPlay.RemoveAt(0);
 
@@ -215,6 +223,7 @@ public class Dialogue : MonoBehaviour
                     character.timeToRemember = 0;
                     character.isRememberLine = true;
                     character.agent.ResetPath();
+                    character.RemovePopUp();
                 //character.choosenTrait = 0;
 
                 if (character.GetComponent<MoveNpc>() != null)
@@ -321,10 +330,17 @@ public class Dialogue : MonoBehaviour
             npcParameters.gameObject.GetComponent<ResetPos>().speed = 0;
         }
 
+        dialogueWindow.npcName.text = npcParameters.GetComponent<Npc>().npcName;
         npcParameters.GetComponent<Npc>().dialogueBubble.SetActive(true);
         npcParameters.voiceSpeech.SetActive(true);
         npcParameters.GetComponent<Npc>().dialogueInteractionIcon.SetActive(false);
         currentlyActiveNPC = npcParameters;
+
+        Color c = npcParameters.dialogueColor.color;
+        c.a = 0.5f;
+        GetComponent<Image>().color = c;
+        //GetComponent<Image>().color = new Color(npcParameters.dialogueColor.color.r, npcParameters.dialogueColor.color.b, npcParameters.dialogueColor.color.b, 180);
+
     }
 
 }
