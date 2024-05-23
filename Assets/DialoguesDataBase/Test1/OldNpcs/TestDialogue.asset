@@ -16,15 +16,12 @@ MonoBehaviour:
   theme: BEEEEEEANS
   fixedTrait: 1
   tags:
-  - ate banana
-  - BEEEEEEANS
-  - gold
-  - Fish
+  - banana
   dialogueLines:
   - I want to tell something about banana either!
   - I love banana
   - I bought some of theme recenlty
   - So tasty!
   fullDialogueSpeech: 
-  commentPhrase: Oh you talking about fishing  and banana right ?
+  commentPhrase: Oh you talking about fishing right ?
   gapPhrase: Well then back to my story

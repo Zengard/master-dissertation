@@ -17,8 +17,9 @@ MonoBehaviour:
   fixedTrait: 2
   tags:
   - Fish
-  - Gold
-  - Fishing
+  - fishing
+  - gold
+  - gold fishing
   dialogueLines:
   - You won't believe what happened with me recently!
   - I was fishing as usual. When suddenly my road started shaking while i ate banana

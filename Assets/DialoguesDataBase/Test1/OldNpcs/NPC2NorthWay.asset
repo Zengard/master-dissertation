@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: NPC2Andrei
+  m_Name: NPC2NorthWay
   m_EditorClassIdentifier: 
   id: 0
   theme: secret... Temple

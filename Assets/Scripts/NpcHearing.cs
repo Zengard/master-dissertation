@@ -5,6 +5,19 @@ using UnityEngine;
 public class NpcHearing : MonoBehaviour
 {
     [SerializeField] private List<Npc> npcs;
+    private float hearRadius;
+    private SphereCollider collider;
+
+    private void Start()
+    {
+        collider = GetComponent<SphereCollider>();
+    }
+
+
+    private void Update()
+    {
+        hearRadius = collider.radius;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -62,5 +75,11 @@ public class NpcHearing : MonoBehaviour
 
         npcs.Clear();
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, hearRadius);
+    //}
 
 }

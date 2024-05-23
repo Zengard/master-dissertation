@@ -89,6 +89,7 @@ public class Npc : MonoBehaviour
             {
                 tempIndex = 0;
                 timeToRemember = _timeToRemember;
+                RemovePopUp();
                 hasComment = false;
                 isRememberLine = false;
                 isFoundInterestingWord = false;
