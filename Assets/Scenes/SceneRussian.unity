@@ -510,7 +510,7 @@ PrefabInstance:
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: b9555030022f1084db526a8d95e9cb55, type: 2}
+      objectReference: {fileID: 11400000, guid: 521eed88d3f6b314498b66d5e262cc8a, type: 2}
     - target: {fileID: 6965194220315853941, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1350,9 +1350,9 @@ MonoBehaviour:
   npcToFollow: {fileID: 0}
   reactionToTheme: 
   listOfDialogues:
-  - {fileID: 11400000, guid: 8a748cc21b11aeb4b8b5c531bef459c7, type: 2}
-  - {fileID: 11400000, guid: ee1953e4b52aa3a419b0a18c82586b42, type: 2}
-  - {fileID: 11400000, guid: 4f3a415603280af4f98b71b3255d07fd, type: 2}
+  - {fileID: 11400000, guid: c5ca581485850d54986e985756ac7420, type: 2}
+  - {fileID: 11400000, guid: 40e07548087d14f479102bf02232b987, type: 2}
+  - {fileID: 11400000, guid: d4d41b4a7fdeeab499d61d4fc81f476d, type: 2}
   triggeredDialogue: -1
   dialogueColor: {fileID: 2100000, guid: 7a2d5c4f7cad2974c8e53cfe3177cc56, type: 2}
 --- !u!54 &344441658
@@ -1456,7 +1456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344441656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.43, y: 1, z: -10.13}
+  m_LocalPosition: {x: -3.47, y: 1, z: -10.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1808,7 +1808,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433548247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.58, y: 1, z: -6.86}
+  m_LocalPosition: {x: 5.09, y: 1, z: -8.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2214,7 +2214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505126559}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: -4.67}
+  m_LocalPosition: {x: 4.68, y: 1, z: -4.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2290,10 +2290,10 @@ MonoBehaviour:
   npcToFollow: {fileID: 0}
   reactionToTheme: 
   listOfDialogues:
-  - {fileID: 11400000, guid: 07ce67957e607eb42b279a4850e46f61, type: 2}
-  - {fileID: 11400000, guid: 90e22204ab029c84eb9caaeaa046379f, type: 2}
-  - {fileID: 11400000, guid: 8143dd64bf5a6af4d98ffe4602b453e3, type: 2}
-  - {fileID: 11400000, guid: 0925dda445454064c9382e1c8174ed2d, type: 2}
+  - {fileID: 11400000, guid: 8419bc9a4ac8f9348beea94da407e2e9, type: 2}
+  - {fileID: 11400000, guid: 13a8daaa7f3c2de4bafab0886ca85b35, type: 2}
+  - {fileID: 11400000, guid: c4735a7f301370f4298494070c5e5eee, type: 2}
+  - {fileID: 11400000, guid: b46027d98ea841349a2fd33e4009c9eb, type: 2}
   triggeredDialogue: -1
   dialogueColor: {fileID: 2100000, guid: 73d37df11112af04cba725ab9e125586, type: 2}
 --- !u!195 &505126567
@@ -2431,9 +2431,9 @@ MonoBehaviour:
   npcToFollow: {fileID: 0}
   reactionToTheme: 
   listOfDialogues:
-  - {fileID: 11400000, guid: 5be1a93bc79a2ed4bb8c7f41a6441023, type: 2}
-  - {fileID: 11400000, guid: 3738ac09eae08824d9fbdd130956d103, type: 2}
-  - {fileID: 11400000, guid: edc1528a4f5dec240a60bec1a9f2da50, type: 2}
+  - {fileID: 11400000, guid: 8dd9fc2a4b2d4ec4fa9a429816a3bd21, type: 2}
+  - {fileID: 11400000, guid: 1bfc921cc580e7942ba26ea5b9208ca4, type: 2}
+  - {fileID: 11400000, guid: 80aadf1d006a32749b0b4871aaef085c, type: 2}
   triggeredDialogue: -1
   dialogueColor: {fileID: 2100000, guid: e74789837c510c94b82c0991523b542a, type: 2}
 --- !u!54 &507239007
@@ -2537,7 +2537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507239003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.69, y: 1, z: 1.39}
+  m_LocalPosition: {x: 2.91, y: 1, z: -5.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3071,15 +3071,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4bca643c1fe000c429dc7bafa2438025, type: 2}
-  m_sharedMaterial: {fileID: -1754404471993368881, guid: 4bca643c1fe000c429dc7bafa2438025, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3875,10 +3875,10 @@ MonoBehaviour:
   npcToFollow: {fileID: 0}
   reactionToTheme: 
   listOfDialogues:
-  - {fileID: 11400000, guid: c01f2f76e358fde4e804514e7c367af1, type: 2}
-  - {fileID: 11400000, guid: a34f473f7bda34649bfb3134dd51e4d6, type: 2}
-  - {fileID: 11400000, guid: 2f76270d6cbc86340b9758ad2a099fb9, type: 2}
-  - {fileID: 11400000, guid: d473a583872859d4ebf4e51474734930, type: 2}
+  - {fileID: 11400000, guid: b0ac725cf17ba0a479728257561b757e, type: 2}
+  - {fileID: 11400000, guid: 41d4159d2e2e7584b9c54aaa96f70f6d, type: 2}
+  - {fileID: 11400000, guid: 95cd0139fa958384c84abe106070256b, type: 2}
+  - {fileID: 11400000, guid: 4d7a293c4c8eed648bf70299341ec324, type: 2}
   triggeredDialogue: -1
   dialogueColor: {fileID: 2100000, guid: 55b5ab835467be648b0ff2a3a42f0952, type: 2}
 --- !u!54 &859087086
@@ -4837,9 +4837,9 @@ MonoBehaviour:
   npcToFollow: {fileID: 0}
   reactionToTheme: 
   listOfDialogues:
-  - {fileID: 11400000, guid: 5cf189b7a1f6547499f5fde7045e4392, type: 2}
-  - {fileID: 11400000, guid: bd4bb3c4880f3a3428cb606398bb8f6e, type: 2}
-  - {fileID: 11400000, guid: c6db2b6158811754d9beb762729df957, type: 2}
+  - {fileID: 11400000, guid: 5597dc7034fecbd4c8cb9371a2514ced, type: 2}
+  - {fileID: 11400000, guid: 087ca0c2169e0e64f9c6be44e4cbf60a, type: 2}
+  - {fileID: 11400000, guid: f2b7d5345005c5747b8a38fb0ae9a724, type: 2}
   triggeredDialogue: -1
   dialogueColor: {fileID: 2100000, guid: 828cc4dbbcc2e8e43b3cd976e176a8de, type: 2}
 --- !u!54 &1163444716
@@ -4943,7 +4943,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163444712}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.09, y: 1, z: -10.63}
+  m_LocalPosition: {x: 0.09, y: 1, z: -7.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6006,6 +6006,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6965194219652833348, guid: b782974688c843c43a48f6e39f3482db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -6073,7 +6077,7 @@ PrefabInstance:
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 0c7529b1bcef162478775b6362774a65, type: 2}
+      objectReference: {fileID: 11400000, guid: 93cff12d80e2aff418534df16bf6806f, type: 2}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[1]
       value: 
@@ -6779,13 +6783,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6965194219652833348, guid: b782974688c843c43a48f6e39f3482db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.18
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6793,7 +6801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.33
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 6965194219652833355, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6854,11 +6862,11 @@ PrefabInstance:
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: edc1528a4f5dec240a60bec1a9f2da50, type: 2}
+      objectReference: {fileID: 11400000, guid: 853219fcdc3ac3d498f73e4cc9667d56, type: 2}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 4438cfe09376cba499de09812d51cf3a, type: 2}
+      objectReference: {fileID: 11400000, guid: bd1791e8b5b1bb34d89db5bc541b716e, type: 2}
     - target: {fileID: 6965194220315853941, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -7690,15 +7698,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: neuroticism
-      value: 0
+      value: 0.708
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: extraversion
-      value: 0
+      value: 0.614
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: agreeableness
-      value: 0
+      value: 0.614
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: dialogueColor
@@ -7706,11 +7714,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2a2e1168b5663a942bc38ac447aa05b6, type: 2}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: conscientiousness
-      value: 0
+      value: 0.669
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: opennesToExperience
-      value: 0
+      value: 0.768
       objectReference: {fileID: 0}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: interestingWordPopUp
@@ -7723,11 +7731,11 @@ PrefabInstance:
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: cd5ab1bad345ed5488f5b201d9bfd3d0, type: 2}
+      objectReference: {fileID: 11400000, guid: ea0c576884c2f884d846a32b51f054f2, type: 2}
     - target: {fileID: 6965194220315853937, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: listOfDialogues.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: d8b8b5d7abf94664995824a3c829164d, type: 2}
+      objectReference: {fileID: 11400000, guid: 913a046c0e5fc4644baf5fd18248594a, type: 2}
     - target: {fileID: 6965194220315853939, guid: b782974688c843c43a48f6e39f3482db, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.29
@@ -7804,7 +7812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7655035742147285029, guid: e95ee59e9c0544544a6af5e6ac7a9762, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.7852
+      value: -16.82
       objectReference: {fileID: 0}
     - target: {fileID: 7655035742147285029, guid: e95ee59e9c0544544a6af5e6ac7a9762, type: 3}
       propertyPath: m_LocalRotation.w

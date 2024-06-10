@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54abfee256af1d845983e66a7c8641fc, type: 3}
-  m_Name: NPC2Default
+  m_Name: TravalerDafaultRussian
   m_EditorClassIdentifier: 
   id: 0
   theme: 
-  fixedTrait: 3
+  fixedTrait: 0
   tags: []
   dialogueLines:
-  - Just another peaceful day
-  - 'It''s a great day to look for dungeon around '
-  - I would like to gold fishing today
+  - "\u044F \u0432 \u043F\u0443\u0442\u0438"
+  - "\u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u043E\u0442\u043E\u0439\u0434\u0438\u0442\u0435"
   fullDialogueSpeech: 
-  commentPhrase: I interested in dungeons too!
-  gapPhrase: 'Back to story about dungeon '
+  commentPhrase: 
+  gapPhrase: 
